@@ -1,0 +1,41 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='sideslope'>
+    <link name='link'>
+      <inertial>
+        <static> true</static>
+        <pose frame=''>0 0 0.2 0 0.0872665 0</pose>
+          <mass>1</mass>
+        <inertia>
+            <ixx>0.166667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.166667</iyy>
+            <iyz>0</iyz>
+            <izz>0.166667</izz>
+          </inertia>
+      </inertial>
+      <collision name='collision'>
+        <pose frame=''>0 0 0.2 0 0.0872665 0</pose>
+          <geometry>
+            <box>
+              <size>1 4 .38</size>
+            </box>
+          </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>1 4 .1</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Turquoise</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
