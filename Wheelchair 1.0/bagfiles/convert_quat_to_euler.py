@@ -18,14 +18,13 @@ def quaternion_to_euler(x, y, z, w):
     return yaw, pitch, roll
 
 def main():
-    row = 0
-    col = 0
-    imu_files = ["Quat_imu_left.csv", "Quat_imu_right.csv"]
-    filename = ["imu_left.xlsx", "imu_right.xlsx"]
-    for i in range(0,2):
+    imu_files = ["Quat_imu_left.xlsx", "Quat_imu_right.xlsx", "Quat_imu_frame.xlsx"]
+    filename = ["imu_left.xlsx", "imu_right.xlsx", "imu_frame.xlsx"]
+    for i in range(0,3):
         workbook = xlsxwriter.Workbook(filename[i])
         worksheet = workbook.add_worksheet()
-
+        row = 0
+        col = 0
         f = open(imu_files[i])
         reader = csv.reader(f)
         next(reader, None)
