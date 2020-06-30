@@ -3,7 +3,6 @@
   <arg name="rvizconfig" default="$(find wheelchair)/rviz/urdf.rviz" />
 
   <include file="$(find wheelchair)/launch/display.launch"/>
-  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" /> -->
 
   <rosparam command="load"
             file="$(find wheelchair)/config/joints.yaml"
