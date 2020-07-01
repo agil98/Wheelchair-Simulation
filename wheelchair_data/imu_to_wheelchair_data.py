@@ -12,10 +12,6 @@ right_msg = WheelchairData()
 
 prev =  0
 
-# Linear velocity from the wheels
-# Orientation from the frame
-# Linear (acceleration ??) from frame
-# Angular velocity taken from the derivative of the linear vel of the frame of the IMU
 def callback(msg, args):
 	orientation =  msg.orientation
 	orientation_list = [orientation.x, orientation.y, orientation.z, orientation.w]
