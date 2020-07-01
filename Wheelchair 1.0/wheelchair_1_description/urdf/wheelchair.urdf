@@ -12,7 +12,7 @@
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu_frame_quat</topicName>
+        <topicName>imu_sensor_frame</topicName>
         <bodyName>base_link</bodyName>
         <updateRateHZ>240</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
@@ -35,7 +35,7 @@
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu_left_quat</topicName>
+        <topicName>imu_sensor_left</topicName>
         <bodyName>Left-Wheel</bodyName>
         <updateRateHZ>240</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
@@ -60,7 +60,7 @@
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu_right_quat</topicName>
+        <topicName>imu_sensor_right</topicName>
         <bodyName>Right-Wheel</bodyName>
         <updateRateHZ>240</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
