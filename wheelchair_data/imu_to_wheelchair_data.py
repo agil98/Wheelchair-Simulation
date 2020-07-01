@@ -12,10 +12,6 @@ right_msg = WheelchairData()
 
 prev =  0
 
-# Linear velocity from the wheels
-# Orientation from the frame
-# Linear (acceleration ??) from frame
-# Angular velocity taken from the derivative of the linear vel of the frame of the IMU
 def callback(msg, args):
 	orientation =  msg.orientation
 	orientation_list = [orientation.x, orientation.y, orientation.z, orientation.w]
@@ -44,12 +40,12 @@ def callback(msg, args):
 rospy.init_node('quaternion_to_euler')
 
 # Create publishers
-pub_frame = rospy.Publisher('/imu_frame', WheelchairData, queue_size=1000)
-pub_left = rospy.Publisher('/imu_left', WheelchairData, queue_size=1000)
-pub_right = rospy.Publisher('/imu_right', WheelchairData, queue_size=1000)
+pub_frame = rospy.Publisher('/imu_data_frame', WheelchairData, queue_size=1000)
+pub_left = rospy.Publisher('/imu_data_left', WheelchairData, queue_size=1000)
+pub_right = rospy.Publisher('/imu_data_right', WheelchairData, queue_size=1000)
 
 # Subscribe to the imu messages and pass the messages to get_rotation
-sub_frame = rospy.Subscriber ('/imu_frame_quat', Imu, callback, ("frame"))
-sub_left = rospy.Subscriber ('/imu_left_quat', Imu, callback, ("left"))
-sub_right = rospy.Subscriber ('/imu_right_quat', Imu, callback, ("right"))
+sub_frame = rospy.Subscriber ('/imu_sensor_frame', Imu, callback, ("frame"))
+sub_left = rospy.Subscriber ('/imu_sensor_left', Imu, callback, ("left"))
+sub_right = rospy.Subscriber ('/imu_sensor_right', Imu, callback, ("right"))
 rospy.spin()

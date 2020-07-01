@@ -18,8 +18,9 @@ def quaternion_to_euler(x, y, z, w):
     return yaw, pitch, roll
 
 def main():
-    imu_files = ["_imu_left_quat.xlsx", "_imu_right_quat.xlsx", "_imu_frame_quat.xlsx"]
-    filename = ["imu_left.xlsx", "imu_right.xlsx", "imu_frame.xlsx"]
+
+    imu_files = ["imu_sensor_left.xlsx", "imu_sensor_right.xlsx", "imu_sensor_frame.xlsx"]
+    filename = ["imu_sensor_left_cleaned.xlsx", "imu_sensor_right_cleaned.xlsx", "imu_sensor_frame_cleaned.xlsx"]
     for i in range(0,3):
         workbook = xlsxwriter.Workbook(filename[i])
         worksheet = workbook.add_worksheet()
