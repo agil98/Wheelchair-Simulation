@@ -1,0 +1,5 @@
+<launch>
+   <param name ="/use_sim_time" value="true"/>
+  <node name="read_csv_publisher" pkg="torque_controller" type="read_csv_publisher.py" />
+  <node name="get_data_subscriber" pkg="torque_controller" type="get_data_subscriber.py" />
+</launch>
