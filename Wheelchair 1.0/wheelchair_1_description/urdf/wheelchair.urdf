@@ -104,28 +104,30 @@
   </gazebo>
   <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
-      <leftJoint>Wheelchair-base-Left-Wheel</leftJoint>
-      <rightJoint>Wheelchair-base-Right-Wheel</rightJoint>
+      <leftJoint>Wheelchair_base_Left_Wheel</leftJoint>
+      <rightJoint>Wheelchair_base_Right_Wheel</rightJoint>
       <robotBaseFrame>base_link</robotBaseFrame>
       <wheelSeparation>0.53616</wheelSeparation>
       <wheelDiameter>0.609</wheelDiameter>
       <publishWheelJointState>true</publishWheelJointState>
     </plugin>
     <plugin filename="libgazebo_ros_joint_state_publisher.so" name="joint_state_publisher">
-      <jointName>Left-Caster-Yaw-Left-Caster-Wheel, Wheelchair-base-Left-Caster-Yaw, Wheelchair-base-Left-Wheel, Right-Caster-Yaw-Right-Caster-Wheel, Wheelchair-base-Right-Caster-Yaw, Wheelchair-base-Right-Wheel</jointName>
+      <jointName>Left-Caster-Yaw-Left-Caster-Wheel, Wheelchair-base-Left-Caster-Yaw, Wheelchair_base_Left_Wheel, Right-Caster-Yaw-Right-Caster-Wheel, Wheelchair-base-Right-Caster-Yaw, Wheelchair_base_Right_Wheel</jointName>
     </plugin>
     <plugin filename="libgazebo_ros_ft_sensor.so" name="ft_sensor">
       <updateRate>50.0</updateRate>
       <topicName>force_torque_left</topicName>
-      <jointName> Wheelchair-base-Left-Wheel</jointName>
+      <jointName> Wheelchair_base_Left_Wheel</jointName>
     </plugin>
     <plugin filename="libgazebo_ros_ft_sensor.so" name="ft_sensor">
       <updateRate>50.0</updateRate>
       <topicName>force_torque_right</topicName>
-      <jointName>Wheelchair-base-Right-Wheel</jointName>
+      <jointName>Wheelchair_base_Right_Wheel</jointName>
     </plugin>
+    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+      </plugin>
   </gazebo>
-  <gazebo reference="Wheelchair-base-Right-Wheel">
+  <gazebo reference="Wheelchair_base_Right_Wheel">
     <disableFixedJointLumping>true</disableFixedJointLumping>
     <sensor name="torque_sensor" type="force_torque">
       <force_torque>
@@ -134,7 +136,7 @@
       </force_torque>
     </sensor>
   </gazebo>
-  <gazebo reference="Wheelchair-base-Left-Wheel">
+  <gazebo reference="Wheelchair_base_Left_Wheel">
     <disableFixedJointLumping>true</disableFixedJointLumping>
     <sensor name="torque_sensor" type="force_torque">
       <force_torque>
@@ -157,7 +159,7 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="4.78178"/>
+      <mass value="54.78178"/>
       <inertia ixx="0.253724" ixy="7e-06" ixz="0.022948" iyy="0.218409" iyz="7e-06" izz="0.382313"/>
     </inertial>
   </link>
@@ -283,7 +285,7 @@
     <axis xyz="0 0 -1"/>
     <limit effort="100" lower="-1000" upper="1000" velocity="10"/>
   </joint>
-  <joint name="Wheelchair-base-Left-Wheel" type="revolute">
+  <joint name="Wheelchair_base_Left_Wheel" type="revolute">
     <parent link="base_link"/>
     <child link="Left-Wheel"/>
     <origin xyz="-0 0.26808 0.305"/>
@@ -304,29 +306,31 @@
     <axis xyz="0 0 1"/>
     <limit effort="100" lower="-1000" upper="1000" velocity="10"/>
   </joint>
-  <joint name="Wheelchair-base-Right-Wheel" type="revolute">
+  <joint name="Wheelchair_base_Right_Wheel" type="revolute">
     <parent link="base_link"/>
     <child link="Right-Wheel"/>
     <origin xyz="0 -0.26808 0.305"/>
     <axis xyz="0 1 0"/>
     <limit effort="100" lower="-1000" upper="1000" velocity="10"/>
   </joint>
-  <transmission name="Wheelchair-base-Left-Wheel-trans">
+  <transmission name="Wheelchair_base_Left_Wheel-trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="Wheelchair-base-Left-Wheel-motor">
+    <actuator name="Wheelchair_base_Left_Wheel-motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="Wheelchair-base-Left-Wheel">
-      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    <joint name="Wheelchair_base_Left_Wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>
-  <transmission name="Wheelchair-base-Right-Wheel-trans">
+  <transmission name="Wheelchair_base_Right_Wheel-trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="Wheelchair-base-Right-Wheel-motor">
+    <actuator name="Wheelchair_base_Right_Wheel-motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="Wheelchair-base-Right-Wheel">
-      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    <joint name="Wheelchair_base_Right_Wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>
 </robot>

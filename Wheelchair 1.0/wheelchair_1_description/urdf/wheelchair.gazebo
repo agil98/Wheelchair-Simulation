@@ -100,28 +100,30 @@
 	</gazebo>
 	<gazebo>
 		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-			<leftJoint>Wheelchair-base-Left-Wheel</leftJoint>
-			<rightJoint>Wheelchair-base-Right-Wheel</rightJoint>
+			<leftJoint>Wheelchair_base_Left_Wheel</leftJoint>
+			<rightJoint>Wheelchair_base_Right_Wheel</rightJoint>
 			<robotBaseFrame>base_link</robotBaseFrame>
 			<wheelSeparation>0.53616</wheelSeparation>
 			<wheelDiameter>0.609</wheelDiameter>
 			<publishWheelJointState>true</publishWheelJointState>
 		</plugin>
 		<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-			<jointName>Left-Caster-Yaw-Left-Caster-Wheel, Wheelchair-base-Left-Caster-Yaw, Wheelchair-base-Left-Wheel, Right-Caster-Yaw-Right-Caster-Wheel, Wheelchair-base-Right-Caster-Yaw, Wheelchair-base-Right-Wheel</jointName>
+			<jointName>Left-Caster-Yaw-Left-Caster-Wheel, Wheelchair-base-Left-Caster-Yaw, Wheelchair_base_Left_Wheel, Right-Caster-Yaw-Right-Caster-Wheel, Wheelchair-base-Right-Caster-Yaw, Wheelchair_base_Right_Wheel</jointName>
 		</plugin>
 		<plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
           <updateRate>50.0</updateRate>
           <topicName>force_torque_left</topicName>
-          <jointName> Wheelchair-base-Left-Wheel</jointName>
+          <jointName> Wheelchair_base_Left_Wheel</jointName>
       </plugin>
       <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
           <updateRate>50.0</updateRate>
           <topicName>force_torque_right</topicName>
-          <jointName>Wheelchair-base-Right-Wheel</jointName>
+          <jointName>Wheelchair_base_Right_Wheel</jointName>
+      </plugin>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       </plugin>
 	</gazebo>
-	<gazebo reference="Wheelchair-base-Right-Wheel">
+	<gazebo reference="Wheelchair_base_Right_Wheel">
 	    <disableFixedJointLumping>true</disableFixedJointLumping>
 	    <sensor name="torque_sensor" type="force_torque">
 	      <force_torque>
@@ -130,7 +132,7 @@
 	      </force_torque>
 	    </sensor>
   	</gazebo>
-  	<gazebo reference="Wheelchair-base-Left-Wheel">
+  	<gazebo reference="Wheelchair_base_Left_Wheel">
 	    <disableFixedJointLumping>true</disableFixedJointLumping>
 	    <sensor name="torque_sensor" type="force_torque">
 	      <force_torque>

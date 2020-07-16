@@ -1,8 +1,8 @@
   type: "diff_drive_controller/DiffDriveController"
   publish_rate: 50
 
-  left_wheel: 'Wheelchair-base-Left-Wheel'
-  right_wheel: 'Wheelchair-base-Right-Wheel'
+  left_wheel: 'Wheelchair_base_Left_Wheel'
+  right_wheel: 'Wheelchair_base_Right_Wheel'
 
   wheel_separation: 0.53616
   wheel_radius: 0.3045
