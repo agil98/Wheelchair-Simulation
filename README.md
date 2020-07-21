@@ -1,6 +1,6 @@
 # Wheelchair-Simulation
 
-The directory names have been slightly altered from master branch as `roscd` misbehaves when directory names have spaces. Be wary.
+The directory names have been slightly altered from master branch as `roscd` misbehaves when directory names have spaces. Be wary. It might be a good idea not to merge this branch immediately and clone it into a different location. Alternatively, you can try only pulling the *torque_controller* directory.
 
 ## Publishing angular velocity:
 
