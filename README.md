@@ -1,5 +1,7 @@
 # Wheelchair-Simulation
 
+The directory names have been slightly altered from master branch as `roscd` misbehaves when directory names have spaces. Be wary.
+
 ## Publishing angular velocity:
 
 1. Edit the `run_and_record.launch` file, located [here](torque_controller/launch) in *torque_controller/launch*. Edit the `<arg>` tags at the top of the file to contain the correct directories for saving csvs and plots. **Note: tilde operator does not work for plots file path. Use absolute paths.**
