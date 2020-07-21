@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="wheelchair" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:include filename="$(find wheelchair_description_1)/urdf/wheelchair.gazebo" />
+	<xacro:include filename="$(find wheelchair_1_description)/urdf/wheelchair.gazebo"/>
 	<xacro:property name = "lower" value = "-1000"/>
 	<xacro:property name = "upper" value = "1000"/>
   	<link name='base_link'>
 	    <visual>
 	    	<oririn rpy= "0 -0 0" xyx = "-0.24919 -1.2e-05 -0.357491"/>
 		    <geometry>
-		    	<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Wheelchair-base_col.STL"/>
+		    	<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Wheelchair-base_col.STL"/>
 		    </geometry>
 	    </visual>
 	    <collision>
         	<oririn rpy= "0 -0 0" xyx = "-0.24919 -1.2e-05 -0.357491"/>
         	<geometry>
-          		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Wheelchair-base_col.STL"/>
+          		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Wheelchair-base_col.STL"/>
         	</geometry>
       	</collision>
 	    <inertial>
@@ -26,13 +26,13 @@
 	  	<visual>
 	  		<origin rpy = "0 -0 0" xyz = "-0.32661 -0.24669 -0.06"/>
 	  		<geometry>
-	  			<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Left-Caster-Wheel.STL"/>
+	  			<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Left-Caster-Wheel.STL"/>
 	  		</geometry>
 	  	</visual>
 	  	<collision>
         	<origin rpy = "0 -0 0" xyz = "-0.32661 -0.24669 -0.06"/>
         		<geometry>
-          			<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Left-Caster-Wheel_col.STL"/>
+          			<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Left-Caster-Wheel_col.STL"/>
         		</geometry>
      	</collision>
 	  	<inertial>
@@ -45,13 +45,13 @@
 	  	<visual>
 		  	<origin rpy = "0 -0 0"  xyz = "-0.35956 -0.24291 -0.1517"/>
 		  	<geometry>
-		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Left-Caster-Yaw.STL"/>
+		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Left-Caster-Yaw.STL"/>
 		  	</geometry>
 		</visual>
 		<collision>
           	<origin rpy = "0 -0 0" xyz = "-0.35956 -0.24291 -0.1517"/>
           	<geometry>
-            	<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Left-Caster-Yaw_col.STL"/>
+            	<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Left-Caster-Yaw_col.STL"/>
           	</geometry>
       	</collision>
 		<inertial>
@@ -64,13 +64,13 @@
 	  	<visual>
 	  		<origin rpy  = "0 -0 0" xyz = "-0 -0.26808 -0.305"/>
 	  		<geometry>
-		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Left-Wheel.STL"/>
+		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Left-Wheel.STL"/>
 		  	</geometry>
 	  	</visual>
 	  	<collision>
         	<origin rpy  = "0 -0 0" xyz = "-0 -0.26808 -0.305"/>
         	<geometry>
-          		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Left-Wheel_col.STL"/>
+          		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Left-Wheel_col.STL"/>
         	</geometry>
       	</collision>
 	  	<inertial>
@@ -83,13 +83,13 @@
 	  	<visual>
 	  		<origin rpy = "0 -0 0" xyz = "-0.32661 0.24108 -0.06"/>
 	  		<geometry>
-	  			<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Right-Caster-Wheel.STL"/>
+	  			<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Right-Caster-Wheel.STL"/>
 	  		</geometry>
 	  	</visual>
 	  	<collision>
         	<origin rpy  = "0 -0 0" xyz = "-0.32661 0.24108 -0.06"/>
         	<geometry>
-          		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Right-Caster-Wheel_col.STL"/>
+          		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Right-Caster-Wheel_col.STL"/>
         	</geometry>
       	</collision>
 	  	<inertial>
@@ -102,13 +102,13 @@
 	  	<visual>
 		  	<origin rpy = "0 -0 0" xyz = "-0.35956 0.24291 -0.1517"/>
 		  	<geometry>
-		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Right-Caster-Yaw.STL"/>
+		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Right-Caster-Yaw.STL"/>
 		  	</geometry>
 		</visual>
 		<collision>
         	<origin rpy = "0 -0 0" xyz = "-0.35956 0.24291 -0.1517"/>
         	<geometry>
-          		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Right-Caster-Yaw_col.STL"/>
+          		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Right-Caster-Yaw_col.STL"/>
         	</geometry>
      	</collision>
 		<inertial>
@@ -121,13 +121,13 @@
 	  	<visual>
 	  		<origin rpy  = "0 -0 0" xyz = "0 0.26808 -0.305"/>
 	  		<geometry>
-		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Right-Wheel.STL"/>
+		  		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Right-Wheel.STL"/>
 		  	</geometry>
 	  	</visual>
 	  	<collision>
         	<origin rpy  = "0 -0 0" xyz = "0 0.26808 -0.305"/>
         	<geometry>
-          		<mesh scale=" 1 1 1" filename = "package://wheelchair_description_1/meshes/Right-Wheel_col.STL"/>
+          		<mesh scale=" 1 1 1" filename = "package://wheelchair_1_description/meshes/Right-Wheel_col.STL"/>
         	</geometry>
       	</collision>
 	  	<inertial>
@@ -190,8 +190,8 @@
         	<mechanicalReduction>1</mechanicalReduction>
      	</actuator>
       	<joint name="Wheelchair_base_Left_Wheel">
-        	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-        	<!-- <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface> -->
+        	<Interface>hardware_interface/VelocityJointInterface</Interface>
+        	<!-- <Interface>hardware_interface/EffortJointInterface</Interface> -->
       	</joint>
     </transmission>
 
@@ -201,8 +201,8 @@
         	<mechanicalReduction>1</mechanicalReduction>
       	</actuator>
       	<joint name="Wheelchair_base_Right_Wheel">
-        	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-        	<!-- <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface> -->
+        	<Interface>hardware_interface/VelocityJointInterface</Interface>
+        	<!-- <Interface>hardware_interface/EffortJointInterface</Interface> -->
       	</joint>
     </transmission>
 </robot>

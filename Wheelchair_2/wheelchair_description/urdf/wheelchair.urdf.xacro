@@ -411,44 +411,44 @@
   <transmission name="SwingL_transmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="SwingL_motor">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <Interface>PositionJointInterface</Interface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="SwingL_rev">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <Interface>hardware_interface/EffortJointInterface</Interface>
     </joint>
   </transmission>  
 
   <transmission name="SwingR_transmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="SwingR_motor">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <Interface>PositionJointInterface</Interface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="SwingR_rev">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <Interface>hardware_interface/EffortJointInterface</Interface>
     </joint>
   </transmission> 
   <!-- add transmission to rear wheels -->
   <transmission name="WheelL_transmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="WheelL_motor">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <!-- <Interface>EffortJointInterface</Interface> -->
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="WheelL_cont">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <Interface>hardware_interface/VelocityJointInterface</Interface>
     </joint>
   </transmission>  
 
   <transmission name="WheelR_transmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="WheelR_motor">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <!-- <Interface>EffortJointInterface</Interface> -->
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="WheelR_cont">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <Interface>hardware_interface/VelocityJointInterface</Interface>
     </joint>
   </transmission> 
 
