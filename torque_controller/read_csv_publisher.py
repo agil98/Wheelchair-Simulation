@@ -6,20 +6,34 @@ import pandas as pd
 import Tkinter as tk
 import tkFileDialog as filedialog
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Bool
+from std_srvs.srv import Empty
+
 
 SAMPLING_RATE = 240
-SCALING = 10
+SCALING = 1
+
 
 rospy.init_node('read_csv_publisher')
 pub = rospy.Publisher("cmd_vel", Twist, queue_size = 10)
+finished = rospy.Publisher("finished_sim", Bool, queue_size = None)
+started = rospy.Publisher("started_sim", Bool, queue_size = None)
+
+# Reset simulation
+rospy.wait_for_service('/gazebo/reset_simulation')
+reset_simulation = rospy.ServiceProxy('/gazebo/reset_simulation', Empty)
+reset_simulation()
 
 root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
 # print(file_path)
 
-data_df = pd.read_excel(file_path)
-# print(data_df["Chair_LinVel"][0])
+data_df = pd.read_csv(file_path)
+
+SAMPLING_RATE = 1/(data_df["Time"][1] - data_df["Time"][0])
+
+started.publish(1)
 
 rate = rospy.Rate(SAMPLING_RATE)
 for index, row in data_df.iterrows():
@@ -36,3 +50,5 @@ for index, row in data_df.iterrows():
 
 # Stop Wheelchair
 pub.publish(Twist())
+finished.publish(1)
+

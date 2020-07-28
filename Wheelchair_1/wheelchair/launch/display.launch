@@ -1,0 +1,21 @@
+<launch>
+
+	<!-- Load the Wheelchair URDF model into the parameter server -->
+	<param name="robot_description" command="$(find xacro)/xacro '$(find wheelchair_1_description)/urdf/wheelchair.urdf.xacro' " />
+
+	<!-- Start Gazebo with an empty world -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+	<!-- Spawn a Wheelchair model in Gazebo, taking the description from the parameter server -->
+	<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output = "screen" args="-param robot_description -urdf -model wheelchair" />
+
+	
+	<!-- Uncomment to load model in Rviz with the joint state publisher node -->
+	<!-- <arg name="gui" default="true" />
+	<arg name="rvizconfig" default="$(find wheelchair)/rviz/urdf.rviz" />
+	<node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+	<node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
+
+</launch>
