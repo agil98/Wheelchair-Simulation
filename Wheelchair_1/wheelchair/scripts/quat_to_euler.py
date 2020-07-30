@@ -1,3 +1,5 @@
+# Not meant to be run as a ROS node
+
 import csv
 import os
 import xlsxwriter
@@ -19,6 +21,7 @@ def quaternion_to_euler(x, y, z, w):
 
 def main():
 
+    # Loop through the 3 imu data files obtained from the sensors
     imu_files = ["imu_sensor_left.xlsx", "imu_sensor_right.xlsx", "imu_sensor_frame.xlsx"]
     filename = ["imu_sensor_left_cleaned.xlsx", "imu_sensor_right_cleaned.xlsx", "imu_sensor_frame_cleaned.xlsx"]
     for i in range(0,3):
@@ -28,6 +31,8 @@ def main():
         col = 0
         f = open(imu_files[i])
         reader = csv.reader(f)
+
+        # Write headers to each column
         next(reader, None)
         worksheet.write(row, col, "Time")
         worksheet.write(row, col + 1, "Yaw")
@@ -40,6 +45,9 @@ def main():
         worksheet.write(row, col + 8, "Linear Acceleration y")
         worksheet.write(row, col + 9, "Linear Acceleration z")
         row += 1
+
+        # For each line in the imu sensor file, transform the quaternion angles to euler,
+        # and the new angles, angular velocity and linear acceleration to the new file
         for time, seq, stamp, frame, x, y, z, w, c0, c1, c2, c3, c4, c5, c6, c7, c8, \
             ang_x, ang_y, ang_z, ang_c0, ang_c1, ang_c2, ang_c3, ang_c4, ang_c5, \
             ang_c6, ang_c7, ang_c8, lin_x, lin_y, lin_z, lin_c0, lin_c1, lin_c2, \

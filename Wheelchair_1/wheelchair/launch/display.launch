@@ -9,7 +9,8 @@
 	<!-- Spawn a Wheelchair model in Gazebo, taking the description from the parameter server -->
 	<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output = "screen" args="-param robot_description -urdf -model wheelchair" />
 
-	
+	<node name="imu_data_acquisition" pkg="wheelchair" type="imu_data_acquisition.py" />
+
 	<!-- Uncomment to load model in Rviz with the joint state publisher node -->
 	<!-- <arg name="gui" default="true" />
 	<arg name="rvizconfig" default="$(find wheelchair)/rviz/urdf.rviz" />
