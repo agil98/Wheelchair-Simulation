@@ -14,7 +14,7 @@
   <link name="base_link">
     <inertial>
       <origin
-        xyz="-0.21708 0 0.22652"
+        xyz="-0.2 0 0.22652"
         rpy="0 0 0" />
       <mass
         value="25.655" />
@@ -437,7 +437,8 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="WheelL_cont">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface> -->
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>  
 
@@ -448,7 +449,8 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="WheelR_cont">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface> -->
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission> 
 
