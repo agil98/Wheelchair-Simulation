@@ -1,7 +1,5 @@
 <launch>
   
-  <arg name="rvizconfig" default="$(find wheelchair)/rviz/urdf.rviz" />
-
   <include file="$(find wheelchair)/launch/display.launch"/>
 
   <rosparam command="load"

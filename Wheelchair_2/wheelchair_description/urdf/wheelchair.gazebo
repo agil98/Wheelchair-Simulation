@@ -41,10 +41,12 @@
   </gazebo>
 
   <gazebo reference ="WheelF_cont">
-    <mu1 value="100.0"/>
+    <mu1 value="100000.0"/>
     <mu2 value="100.0"/>
     <kp value="10000000.0"/>
     <kd value= "1.0"/>
+    <minDepth>0.005</minDepth>
+    <maxContacts>1</maxContacts>
   </gazebo>
 
   <gazebo reference ="SwingR_rev">
@@ -55,10 +57,13 @@
   </gazebo>
 
   <gazebo reference ="WheelR_cont">
-    <mu1 value="100.0"/>
+    <mu1 value="100000.0"/>
+    <fdir1>1 0 0 </fdir1>
     <mu2 value="100.0"/>
     <kp value="10000000.0"/>
     <kd value= "1.0"/>
+    <minDepth>0.005</minDepth>
+    <maxContacts>1</maxContacts>
   </gazebo>
 
   <gazebo reference ="SwingL_rev">
@@ -69,10 +74,13 @@
   </gazebo>
 
   <gazebo reference ="WheelL_cont">
-    <mu1 value="100.0"/>
+    <mu1 value="100000.0"/>
+    <fdir1>1 0 0 </fdir1>
     <mu2 value="100.0"/>
     <kp value="10000000.0"/>
     <kd value= "1.0"/>
+    <minDepth>0.005</minDepth>
+    <maxContacts>1</maxContacts>
   </gazebo>
 
    <gazebo>
@@ -90,19 +98,105 @@
 
   <gazebo reference="base_link">
     <gravity>true</gravity>
-    <sensor name="imu_sensor" type="imu">
+    <sensor name="frame_imu" type="imu">
       <always_on>true</always_on>
       <update_rate>100</update_rate>
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
-        <bodyName>imu_link</bodyName>
+        <topicName>imu/frame</topicName>
+        <bodyName>base_link</bodyName>
         <updateRateHZ>10.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
-        <frameName>imu_link</frameName>
+        <frameName>base_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <!-- recording odometery data from the wheelchair frame -->
+  <gazebo>
+    <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>odom/frame</topicName>
+      <gaussianNoise>0</gaussianNoise>
+      <frameName>map</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets> 
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="WheelL_cont">
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+
+	<!-- The ft_sensor plugin for the left wheel's joint -->  
+	<gazebo>
+	    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+	        <updateRate>240</updateRate>
+	        <topicName>ft_sensor_topic/left</topicName>
+	        <jointName>WheelL_cont</jointName>
+          <gaussianNoise>0.0001</gaussianNoise>
+	    </plugin>
+	</gazebo>
+
+  <!-- The imu plugin for the left wheel --> 
+  <gazebo reference="WheelL">
+    <gravity>true</gravity>
+    <sensor name="WheelL_imu" type="imu">
+      <always_on>true</always_on>
+      <update_rate>240</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu/WheelL</topicName>
+        <bodyName>WheelL</bodyName>
+        <updateRateHZ>240.0</updateRateHZ>
+        <gaussianNoise>0.000001</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>WheelL</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="WheelR_cont">
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+
+	<!-- The ft_sensor plugin for the right wheel's joint -->   
+	<gazebo>
+	    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+	        <updateRate>240</updateRate>
+	        <topicName>ft_sensor_topic/right</topicName>
+	        <jointName>WheelR_cont</jointName>
+          <gaussianNoise>0.0001</gaussianNoise>
+	    </plugin>
+	</gazebo>
+
+  <!-- The imu plugin for the right wheel --> 
+  <gazebo reference="WheelR">
+    <gravity>true</gravity>
+    <sensor name="WheelR_imu" type="imu">
+      <always_on>true</always_on>
+      <update_rate>240</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu/WheelR</topicName>
+        <bodyName>WheelR</bodyName>
+        <updateRateHZ>240.0</updateRateHZ>
+        <gaussianNoise>0.000001</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>WheelR</frameName>
         <initialOrientationAsReference>false</initialOrientationAsReference>
       </plugin>
       <pose>0 0 0 0 0 0</pose>

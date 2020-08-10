@@ -1,21 +1,31 @@
 <launch>
 
-  <!-- Load the URDF into the ROS Parameter Server -->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find wheelchair_description)/urdf/wheelchair.urdf.xacro' " />
+  <!-- Add robot_description into the ROS Parameter Server -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find wheelchair_description)/urdf/wheelchair_2.0.urdf.xacro' " />
 
   <!-- Define wheelchair's default pose -->
   <arg name="x_pos" default="0"/>
   <arg name="y_pos" default="0"/>
-  <arg name="z_pos" default="0.30"/>
+  <arg name="z_pos" default="0.254"/>
 
-    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <!-- Determine whether to load rviz -->
+  <arg name="load_rviz" default="false"/>
+
+  <!-- Determine whether to load Twist/velocity/effort publishers -->
+  <arg name="load_twist_publisher" default="false"/>
+  <arg name="load_torque_publisher" default="true"/>
+  <arg name="load_velocity_publisher" default="false"/>
+  <arg name="load_rqt_robot_steering" default="false"/>
+  <arg name="log_data" default="true"/>
+  <arg name="load_rqt_gui" default="false"/>
+
+    <!-- Run a python script to  send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"  args="-urdf -model wheelchair -param robot_description -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)"/>
 
-  
   <!-- Start Gazebo with an empty world -->
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch" >
-    <arg name = "world_name" value="$(find wheelchair_gazebo)/worlds/ramps.world"/>
+    <!-- <arg name = "world_name" value="$(find wheelchair_gazebo)/worlds/ramps.world"/> -->
     <arg name="use_sim_time" value="true"/>
     <arg name="verbose" value="true"/>
     <arg name="paused" value="true"/>
@@ -23,7 +33,8 @@
    </include>
 
   <node
-    name="rviz" pkg="rviz" type="rviz" args="-d $(find wheelchair_gazebo)/launch/config.rviz" />
+    name="rviz" pkg="rviz" type="rviz" args="-d $(find wheelchair_gazebo)/launch/config.rviz" 
+    if="$(arg load_rviz)"/>
 
   <!-- ros_control launch file -->
   <include file="$(find wheelchair_control)/launch/wheelchair_control.launch"/>
@@ -32,12 +43,40 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher"  type="robot_state_publisher" respawn = "false" output="screen">
   </node>
 
-  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering" 
+        if="$(arg load_rqt_robot_steering)">
     <param name="default_topic" value="/mobile_base_controller/cmd_vel"/> 
   </node>
 
-  <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui" output="screen"> 
+  <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui" output="screen" if="$(arg load_rqt_gui)"> 
     <param name="default_topic" value="/SwingL_controller/command"/> 
+  </node>
+
+  <!-- node to read Twist commands from cvs and publish to gazebo model -->
+  <node name="twist_publisher" pkg="wheelchair_gazebo" type="set_wheelchair_Twist.py" 
+        if="$(arg load_twist_publisher)">
+  </node>
+
+  <!-- record model states in a rosbag file -->
+  <node name="rosbag_record_modelstate" pkg="rosbag" type="record"
+        args = "-o wheelchair_odom /odom/frame" if="$(arg load_twist_publisher)">
+  </node>
+
+  <!-- node to read effort commands from cvs and publish to gazebo model -->
+  <node name="effort_publisher" pkg="wheelchair_gazebo" type="set_wheel_torque.py" 
+        if="$(arg load_torque_publisher)">
+  </node>
+
+  <node name="rosbag_record_wheeltorque" pkg="rosbag" type="record"
+        args = "-o wheel_torque /ft_sensor_topic/left /ft_sensor_topic/right" if="$(arg load_torque_publisher)">
+  </node>
+
+  <node name="velocity_publisher" pkg="wheelchair_gazebo" type="set_wheel_velocity.py" 
+        if="$(arg load_velocity_publisher)">
+  </node>
+
+  <node name="rosbag_record_linkstates" pkg="rosbag" type="record"
+        args = "-o wheel_velocity /imu/WheelL /imu/WheelR" if="$(arg load_velocity_publisher)">
   </node>
 
 </launch>

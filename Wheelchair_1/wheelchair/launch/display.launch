@@ -1,7 +1,7 @@
 <launch>
 
 	<!-- Load the Wheelchair URDF model into the parameter server -->
-	<param name="robot_description" textfile="$(find wheelchair_description_1)/urdf/wheelchair.urdf" />
+	<param name="robot_description" command="$(find xacro)/xacro '$(find wheelchair_1_description)/urdf/wheelchair.urdf.xacro' " />
 
 	<!-- Start Gazebo with an empty world -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch"/>
@@ -9,7 +9,14 @@
 	<!-- Spawn a Wheelchair model in Gazebo, taking the description from the parameter server -->
 	<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output = "screen" args="-param robot_description -urdf -model wheelchair" />
 
-	
+	<!-- Modify data obtained from the imu sensors and publish it in 
+	new topics -->
+	<node name="imu_data_acquisition" pkg="wheelchair" type="imu_data_acquisition.py" />
+
+	<!-- Obtain the imu data from the individual sensors and calculate
+	imu data for the wheelchair as a whole -->
+	<node name="calculate_imu_for_wheelchair" pkg="wheelchair" type="calculate_imu_for_wheelchair.py" />
+
 	<!-- Uncomment to load model in Rviz with the joint state publisher node -->
 	<!-- <arg name="gui" default="true" />
 	<arg name="rvizconfig" default="$(find wheelchair)/rviz/urdf.rviz" />
