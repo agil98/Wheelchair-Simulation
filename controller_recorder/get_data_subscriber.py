@@ -4,6 +4,7 @@ import rospy
 import rosbag
 import csv
 import os
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -20,8 +21,15 @@ LEFT_BAG_SIM = 'left.bag'
 RIGHT_BAG_SIM = 'right.bag'
 
 file_name = rospy.get_param('get_data_subscriber/file_name')
-csv_file_path = os.path.join(rospy.get_param('get_data_subscriber/csv_save_location'), file_name + ".csv")
-plot_file_path = os.path.join(rospy.get_param('get_data_subscriber/plot_save_location'), file_name + ".png")
+csv_dir = rospy.get_param('get_data_subscriber/csv_save_location')
+plot_dir = rospy.get_param('get_data_subscriber/plot_save_location')
+if not os.path.exists(csv_dir):
+    os.makedirs(csv_dir)
+if not os.path.exists(plot_dir):
+    os.makedirs(plot_dir)
+
+csv_file_path = os.path.join(csv_dir, file_name + ".csv")
+plot_file_path = os.path.join(plot_dir, file_name + ".png")
 
 bag_left = rosbag.Bag(LEFT_BAG_SIM, 'w')
 bag_right = rosbag.Bag(RIGHT_BAG_SIM, 'w')
@@ -44,6 +52,11 @@ def imu_right_callback(msg):
     # right_ang_vel.append(msg.angular_velocity.y)
     # right_vel_x.append(msg.angular_velocity.y * WHEEL_DIAMETER)
 
+def start_callback(msg):
+    global started
+    started = True
+    print("Started")
+
 def print_callback(msg):
     print(msg)
 
@@ -51,14 +64,12 @@ def print_callback(msg):
 # sub_cmd_vel = rospy.Subscriber("cmd_vel", Twist, cmd_vel_callback)
 sub_imu_left = rospy.Subscriber("imu_sensor_left", Imu, imu_left_callback)
 sub_imu_right = rospy.Subscriber("imu_sensor_right", Imu, imu_right_callback)
+sub_start_signal = rospy.Subscriber("started_sim", Bool, start_callback)
 
 # Wait for start
 print("Waiting for start...")
-started_msg = rospy.wait_for_message("started_sim", Bool)
-started = started_msg.data
-print("Started")
 
-start_time = rospy.Time.now().to_sec()
+# start_time = rospy.Time.now().to_sec()
 
 # Wait until finished
 finished_msg = rospy.wait_for_message("finished_sim", Bool)
@@ -121,7 +132,7 @@ data_df = pd.DataFrame(np.transpose(data), columns=columns)
 # print(data_df)
 data_df.to_csv(csv_file_path)
 
-
+matplotlib.rcParams["savefig.directory"] = plot_dir
 # Plot data
 fig, ax = plt.subplots(2)
 ax[0].plot(left_time_sim, left_ang_vel_sim, label = "Sim Data")
