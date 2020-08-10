@@ -39,18 +39,10 @@ started = False
 def imu_left_callback(msg):
     if started:
         bag_left.write('imu_sensor_left', msg)
-    # print("left")
-    # left_time.append(rospy.Time.now().to_sec() - start_time)
-    # left_ang_vel.append(msg.angular_velocity.y)
-    # left_vel_x.append(msg.angular_velocity.y * WHEEL_DIAMETER)
 
 def imu_right_callback(msg):
     if started:
         bag_right.write("imu_sensor_right", msg)
-    # print("right")
-    # right_time.append(rospy.Time.now().to_sec() - start_time)
-    # right_ang_vel.append(msg.angular_velocity.y)
-    # right_vel_x.append(msg.angular_velocity.y * WHEEL_DIAMETER)
 
 def start_callback(msg):
     global started
