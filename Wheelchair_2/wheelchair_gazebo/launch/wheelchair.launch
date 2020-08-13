@@ -13,7 +13,7 @@
 
   <!-- Determine whether to load Twist/velocity/effort publishers -->
   <arg name="load_twist_publisher" default="false"/>
-  <arg name="load_torque_publisher" default="true"/>
+  <arg name="load_torque_publisher" default="false"/>
   <arg name="load_velocity_publisher" default="false"/>
   <arg name="load_rqt_robot_steering" default="false"/>
   <arg name="log_data" default="true"/>

@@ -8,14 +8,14 @@
 
   <rosparam command="load"
             file="$(find wheelchair)/config/velocity_controller_left.yaml"
-            ns="joint_velocity_controller_left" />
+            ns="WheelL_velocity_controller" />
   <rosparam command="load"
             file="$(find wheelchair)/config/velocity_controller_right.yaml"
-            ns="joint_velocity_controller_right" />
+            ns="WheelR_velocity_controller" />
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner"
     args="joint_state_controller
-          joint_velocity_controller_left
-    	    joint_velocity_controller_right
+          WheelL_velocity_controller
+    	    WheelR_velocity_controller
           --shutdown-timeout 3"/>
 </launch>

@@ -11,11 +11,11 @@
 
 	<!-- Modify data obtained from the imu sensors and publish it in 
 	new topics -->
-	<node name="imu_data_acquisition" pkg="wheelchair" type="imu_data_acquisition.py" />
+	<!-- <node name="imu_data_acquisition" pkg="wheelchair" type="imu_data_acquisition.py" /> -->
 
 	<!-- Obtain the imu data from the individual sensors and calculate
 	imu data for the wheelchair as a whole -->
-	<node name="calculate_imu_for_wheelchair" pkg="wheelchair" type="calculate_imu_for_wheelchair.py" />
+	<!-- <node name="calculate_imu_for_wheelchair" pkg="wheelchair" type="calculate_imu_for_wheelchair.py" /> -->
 
 	<!-- Uncomment to load model in Rviz with the joint state publisher node -->
 	<!-- <arg name="gui" default="true" />
