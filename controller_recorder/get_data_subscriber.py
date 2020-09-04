@@ -11,6 +11,8 @@ import pandas as pd
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Imu
 from std_msgs.msg import Bool, Float64
+from scipy.signal import butter, lfilter
+
 
 rospy.init_node('get_data_subscriber')  
 
@@ -54,8 +56,8 @@ def print_callback(msg):
 
 
 # sub_cmd_vel = rospy.Subscriber("cmd_vel", Twist, cmd_vel_callback)
-sub_imu_left = rospy.Subscriber("imu_sensor_left", Imu, imu_left_callback)
-sub_imu_right = rospy.Subscriber("imu_sensor_right", Imu, imu_right_callback)
+sub_imu_left = rospy.Subscriber("imu/WheelL", Imu, imu_left_callback)
+sub_imu_right = rospy.Subscriber("imu/WheelR", Imu, imu_right_callback)
 sub_start_signal = rospy.Subscriber("started_sim", Bool, start_callback)
 
 # Wait for start
@@ -106,6 +108,23 @@ command_right_ang_vel = np.transpose(command_df["AngVel_R"])
 # Make left_time, right_time start from 0
 left_time_sim = [x-left_time_sim[0] for x in left_time_sim]
 right_time_sim = [x-right_time_sim[0] for x in right_time_sim]
+
+# # Filter
+# def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
+#     nyq = 0.5 * fs
+#     low = lowcut / nyq
+#     high = highcut / nyq
+#     b, a = butter(order, [low, high], btype='band')
+#     y = lfilter(b, a, data)
+#     return y
+
+# fs = 1.0/(left_time_sim[1] - left_time_sim[0])
+# lowcut = 0.1
+# highcut = 50
+# if highcut > fs/2:
+#     highcut  = fs/2
+# left_ang_vel_sim = butter_bandpass_filter(left_ang_vel_sim, lowcut, highcut, fs).tolist()
+# right_ang_vel_sim = butter_bandpass_filter(right_ang_vel_sim, lowcut, highcut, fs).tolist()
 
 columns = ["left_time_sim", "left_ang_vel_sim", "right_time_sim", "right_ang_vel_sim", "command_time", "command_left_ang_vel", "command_right_ang_vel"]
 data = [left_time_sim, left_ang_vel_sim, right_time_sim, right_ang_vel_sim, 
