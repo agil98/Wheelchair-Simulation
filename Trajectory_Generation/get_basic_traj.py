@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.signal import find_peaks
+from scipy.interpolate import CubicSpline
 
 
 # Import data
@@ -27,11 +28,14 @@ CRUISE_TIME = 1 # seconds
 MAX_VEL = 5 # m/s
 TORQUE_TO_VEL = 0.8 # used for scaling
 
+ACCELERATION_THRESHOLD = 0.5
+DECELERATION_THRESHOLD = -0.1
+
 
 # Given torque, find target velocity
 def get_target_vel(torque):
     return torque*TORQUE_TO_VEL if torque*TORQUE_TO_VEL < MAX_VEL else MAX_VEL
-def get_generated_vel(torques, vels, start_vel, cruise_count = 0):
+def get_linear_vel(torques, vels, start_vel, cruise_count = 0):
     peaks, _ = find_peaks(torques)
 
     ref_torque = max(torques) if peaks.size == 0 else max(torques[peaks])
@@ -79,24 +83,104 @@ def get_generated_vel(torques, vels, start_vel, cruise_count = 0):
 
     # Decelerate
     return generated, cruise_count
+# No deceleration if above threshold
+def get_linear_smooth_vel(torques, vels, start_vel, cruise_count = 0):
+    peaks, _ = find_peaks(torques)
 
+    ref_torque = max(torques) if peaks.size == 0 else max(torques[peaks])
+    target_vel = get_target_vel(ref_torque)
 
+    length_count = 0
+    generated = []
+    generated.append(start_vel)
+
+    # Acceleration
+    while length_count < wINDOW_SIZE:
+        if target_vel < DECELERATION_THRESHOLD:
+            vel_to_append = start_vel - length_count*CONST_ACC*TIME_STEP
+        else:
+            vel_to_append = start_vel + length_count*CONST_ACC*TIME_STEP
+    
+
+        if vel_to_append > MAX_VEL:
+            vel_to_append = MAX_VEL
+            break
+        # if vel_to_append > target_vel:
+        #     vel_to_append = target_vel
+
+        generated.append(vel_to_append)
+        length_count = length_count + 1
+
+    # Cruise
+    while length_count < wINDOW_SIZE:
+        generated.append(vel_to_append)
+        length_count = length_count + 1
+        cruise_count = cruise_count + 1
+
+    return generated
+
+def get_spline_vel(torques, vels):
+    peaks, _ = find_peaks(torques)
+
+    target_vels = []
+    for peak in peaks:
+        target_vels.append(get_target_vel(torques[peak]))
+
+    if not target_vels:
+        target_vels.append(get_target_vel(max(torques))) 
+
+    print(target_vels)
+    
 
 left_generated = [0]
 right_generated = [0]
 left_cruise_count = 0
 right_cruise_count = 0
 
-for i in range(0, len(data_df), wINDOW_SIZE): 
-    window = data_df.iloc[i:i+wINDOW_SIZE, :]
-    window.reset_index(drop=True, inplace=True)
-    window.dropna()
 
-    new_left, left_cruise_count = get_generated_vel(window["Torque_L"], window["AngVel_L"], left_generated[-1], left_cruise_count)
-    new_right, right_cruise_count = get_generated_vel(window["Torque_R"], window["AngVel_R"], right_generated[-1], right_cruise_count)
+# --- Spline interpolation ---> Not really working 
+target_vels_left = []
+target_vels_right = []
+left_peaks, _ = find_peaks(data_df["Torque_L"])
+right_peaks, _ = find_peaks(data_df["Torque_R"])
 
-    left_generated = left_generated + new_left
-    right_generated = right_generated + new_right
+new_left_peaks = []
+new_right_peaks = []
+
+for peak in left_peaks:
+    target_vel =  get_target_vel(data_df["Torque_L"][peak])
+    if target_vel > ACCELERATION_THRESHOLD:
+        target_vels_left.append(target_vel)
+        new_left_peaks.append(peak * TIME_STEP)
+for peak in right_peaks:
+    target_vel = get_target_vel(data_df["Torque_R"][peak]) > DECELERATION_THRESHOLD
+    if target_vel > ACCELERATION_THRESHOLD:
+        target_vels_right.append(target_vel)
+        new_right_peaks.append(peak * TIME_STEP)
+
+cs_left = CubicSpline(new_left_peaks, target_vels_left)
+cs_right = CubicSpline(new_right_peaks, target_vels_right)
+
+left_generated = cs_left(data_df["Time"])
+right_generated = cs_right(data_df["Time"])
+# ---
+
+
+# for i in range(0, len(data_df), wINDOW_SIZE): 
+#     window = data_df.iloc[i:i+wINDOW_SIZE, :]
+#     window.reset_index(drop=True, inplace=True)
+#     window.dropna()
+
+#     new_left, left_cruise_count = get_linear_vel(window["Torque_L"], window["AngVel_L"], left_generated[-1], left_cruise_count)
+#     new_right, right_cruise_count = get_linear_vel(window["Torque_R"], window["AngVel_R"], right_generated[-1], right_cruise_count)
+
+#     new_left = get_linear_smooth_vel(window["Torque_L"], window["AngVel_L"], left_generated[-1])
+#     new_right = get_linear_smooth_vel(window["Torque_R"], window["AngVel_R"], right_generated[-1])
+
+    
+    
+#     left_generated = left_generated + new_left
+#     right_generated = right_generated + new_right
 
 
 
